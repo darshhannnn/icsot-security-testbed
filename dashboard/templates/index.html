@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <section class="summary">
+    <div class="metric"><span>Total visible alerts</span><strong>{{ alerts|length }}</strong></div>
+    {% for severity, count in counts_by_severity.items() %}
+    <div class="metric"><span>{{ severity }} severity</span><strong>{{ count }}</strong></div>
+    {% endfor %}
+    {% for rule, count in counts_by_rule.items() %}
+    <div class="metric"><span>{{ rule }}</span><strong>{{ count }}</strong></div>
+    {% endfor %}
+  </section>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Severity</th>
+        <th>Rule</th>
+        <th>Source</th>
+        <th>Destination</th>
+        <th>Function</th>
+        <th>Detail</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for alert in alerts %}
+      <tr>
+        <td><a href="/alerts/{{ alert.id }}">{{ alert.timestamp }}</a></td>
+        <td><span class="badge {{ alert.severity }}">{{ alert.severity }}</span></td>
+        <td>{{ alert.rule }}</td>
+        <td>{{ alert.source_ip }}:{{ alert.source_port }}</td>
+        <td>{{ alert.destination_ip }}:{{ alert.destination_port }}</td>
+        <td>{{ alert.function_code }}</td>
+        <td>{{ alert.detail }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Alert {{ alert.id }}{% endblock %}
+{% block heading %}Alert {{ alert.id }}{% endblock %}
+
+{% block body %}
+  <p><a href="/">Back to alerts</a></p>
+  <section class="detail">
+    <dl>
+      <dt>Timestamp</dt><dd>{{ alert.timestamp }}</dd>
+      <dt>Severity</dt><dd><span class="badge {{ alert.severity }}">{{ alert.severity }}</span></dd>
+      <dt>Rule</dt><dd>{{ alert.rule }}</dd>
+      <dt>Source</dt><dd>{{ alert.source_ip }}:{{ alert.source_port }}</dd>
+      <dt>Destination</dt><dd>{{ alert.destination_ip }}:{{ alert.destination_port }}</dd>
+      <dt>Function code</dt><dd>{{ alert.function_code }}</dd>
+      <dt>Detail</dt><dd>{{ alert.detail }}</dd>
+      <dt>Raw payload</dt><dd><code>{{ alert.raw_payload }}</code></dd>
+    </dl>
+  </section>
+{% endblock %}

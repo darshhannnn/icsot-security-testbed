@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="10">
+  <title>{% block title %}GRFICSv3 Modbus IDS{% endblock %}</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      color: #172033;
+    }
+    body {
+      margin: 0;
+      background: #f4f6f9;
+    }
+    header {
+      padding: 18px 28px;
+      background: #ffffff;
+      border-bottom: 1px solid #d8dee9;
+    }
+    main {
+      padding: 22px 28px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+    a {
+      color: #155fbf;
+      text-decoration: none;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .metric, table, .detail {
+      background: #ffffff;
+      border: 1px solid #d8dee9;
+      border-radius: 8px;
+    }
+    .metric {
+      padding: 14px;
+    }
+    .metric span {
+      color: #5c667a;
+      font-size: 13px;
+    }
+    .metric strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 26px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e5e9f2;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+    th {
+      background: #edf1f8;
+      color: #39445a;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    code {
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+    .badge {
+      display: inline-block;
+      min-width: 58px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      background: #e8edf5;
+    }
+    .badge.high {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .badge.medium {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .detail {
+      padding: 18px;
+    }
+    .detail dl {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 10px 14px;
+      margin: 0;
+    }
+    .detail dt {
+      color: #5c667a;
+      font-weight: 700;
+    }
+    .detail dd {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>{% block heading %}GRFICSv3 Modbus IDS Alerts{% endblock %}</h1>
+  </header>
+  <main>
+    {% block body %}{% endblock %}
+  </main>
+</body>
+</html>
+

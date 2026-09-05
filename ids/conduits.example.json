@@ -1,0 +1,106 @@
+{
+  "zones": {
+    "192.168.90.107": {
+      "component": "hmi_scadalts",
+      "zone": "zone_2_supervisory"
+    },
+    "192.168.95.5": {
+      "component": "engineering_workstation",
+      "zone": "zone_2_supervisory"
+    },
+    "192.168.95.2": {
+      "component": "plc_openplc",
+      "zone": "zone_1_control"
+    },
+    "192.168.95.45": {
+      "component": "process_simulation",
+      "zone": "zone_0_process"
+    },
+    "192.168.95.10": {
+      "component": "remote_io_feed1",
+      "zone": "zone_0_process"
+    },
+    "192.168.95.11": {
+      "component": "remote_io_feed2",
+      "zone": "zone_0_process"
+    },
+    "192.168.95.12": {
+      "component": "remote_io_purge",
+      "zone": "zone_0_process"
+    },
+    "192.168.95.13": {
+      "component": "remote_io_product",
+      "zone": "zone_0_process"
+    },
+    "192.168.95.14": {
+      "component": "remote_io_tank",
+      "zone": "zone_0_process"
+    },
+    "192.168.95.15": {
+      "component": "remote_io_analyzer",
+      "zone": "zone_0_process"
+    },
+    "192.168.90.6": {
+      "component": "kali_attacker",
+      "zone": "zone_3_external"
+    }
+  },
+  "allowed_conduits": [
+    {
+      "id": "C-001",
+      "source": "192.168.90.107",
+      "destination": "192.168.95.2",
+      "protocol": "tcp",
+      "port": 502,
+      "description": "HMI (ScadaLTS) to PLC Modbus/TCP - normal operator control"
+    },
+    {
+      "id": "C-005",
+      "source": "192.168.95.2",
+      "destination": "192.168.95.10",
+      "protocol": "tcp",
+      "port": 502,
+      "description": "PLC master polls remote IO: Feed 1"
+    },
+    {
+      "id": "C-005",
+      "source": "192.168.95.2",
+      "destination": "192.168.95.11",
+      "protocol": "tcp",
+      "port": 502,
+      "description": "PLC master polls remote IO: Feed 2"
+    },
+    {
+      "id": "C-005",
+      "source": "192.168.95.2",
+      "destination": "192.168.95.12",
+      "protocol": "tcp",
+      "port": 502,
+      "description": "PLC master polls remote IO: Purge"
+    },
+    {
+      "id": "C-005",
+      "source": "192.168.95.2",
+      "destination": "192.168.95.13",
+      "protocol": "tcp",
+      "port": 502,
+      "description": "PLC master polls remote IO: Product"
+    },
+    {
+      "id": "C-005",
+      "source": "192.168.95.2",
+      "destination": "192.168.95.14",
+      "protocol": "tcp",
+      "port": 502,
+      "description": "PLC master polls remote IO: Tank"
+    },
+    {
+      "id": "C-005",
+      "source": "192.168.95.2",
+      "destination": "192.168.95.15",
+      "protocol": "tcp",
+      "port": 502,
+      "description": "PLC master polls remote IO: Analyzer"
+    }
+  ]
+}

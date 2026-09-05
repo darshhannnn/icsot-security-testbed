@@ -1,0 +1,10 @@
+# Keep the docker build context small: this repo sits next to the GRFICSv3
+# clone and the WSL disk image, none of which belong in the image.
+GRFICSv3/
+wsl/
+.venv/
+**/__pycache__/
+*.db
+*.pcap
+docs/
+.git/
