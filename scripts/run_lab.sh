@@ -24,7 +24,7 @@ echo "== 2. Build the lab tools image (python + scapy + pymodbus + flask) =="
 docker build -t ids-lab-tools -f "$REPO_DIR/scripts/Dockerfile.tools" "$REPO_DIR"
 
 echo "== 3. Start the IDS detector (sidecar in the PLC's network namespace) =="
-PLC_IFACE="$(docker exec plc ip -o -4 addr show to "${PLC_IP}/24" | awk '{print $2}' | head -n1)"
+PLC_IFACE=$(docker exec plc sh -c 'ls /sys/class/net' | grep -v -E '^(lo|eth0)$' | head -n1)
 echo "PLC Modbus interface: ${PLC_IFACE}"
 docker rm -f ids-detector >/dev/null 2>&1 || true
 docker run -d --name ids-detector \
@@ -58,16 +58,20 @@ docker run --rm --network grficsv3_c-dmz-net --ip 192.168.90.99 \\
   -v "$REPO_DIR:/work" -w /work ids-lab-tools \\
   python attacks/unauthorized_write.py --target ${PLC_IP} --address 1 --value 1
 
-# Flood of Modbus reads from the same host (expect: request_rate_spike alert)
+# Flood of Modbus reads from the same host (expect: request_rate_spike alert).
+# ~100 req/s crosses the 300 req/10s per-pair threshold within ~3s; the old
+# 75@0.02s burst (~37 req/s) is below the measured-legitimate 186 req/10s
+# baseline of the PLC's own polling, so it would never fire the new threshold.
 docker run --rm --network grficsv3_c-dmz-net --ip 192.168.90.99 \\
   -v "$REPO_DIR:/work" -w /work ids-lab-tools \\
-  python attacks/flood.py --target ${PLC_IP} --count 75 --delay 0.02
+  python attacks/flood.py --target ${PLC_IP} --count 500 --delay 0.01
 
-# Zone-boundary violation: workstation-zone host -> PLC, bypassing the HMI
+# Zone-boundary violation: workstation-zone host -> PLC, bypassing the HMI.
+# A READ is sent deliberately so only the zone rule can fire.
 # (expect: zone_boundary_violation alert)
 docker run --rm --network grficsv3_b-ics-net --ip 192.168.95.99 \\
   -v "$REPO_DIR:/work" -w /work ids-lab-tools \\
-  python attacks/unauthorized_write.py --target ${PLC_IP} --address 2 --value 0
+  python attacks/zone_boundary_probe.py --target ${PLC_IP} --address 0 --count 1
 
 # Negative test: wait >10s (rate window) and confirm legitimate process
 # traffic (PLC -> remote-IO polls, HMI -> PLC reads) produces no alerts.
